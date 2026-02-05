@@ -19,7 +19,7 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
       try {
         setLoading(true)
         const paddedNum = String(episodeNumber).padStart(3, '0')
-        const response = await fetch(`/src/data/novels/episode-${paddedNum}.txt`)
+        const response = await fetch(`${import.meta.env.BASE_URL}novels/episode-${paddedNum}.txt`)
         const text = await response.text()
 
         // Remove episode title (first line) and extra newlines
