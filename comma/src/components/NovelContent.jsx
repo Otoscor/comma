@@ -136,8 +136,17 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
       setTimeout(handleTextSelection, 10)
     }
 
+    const handleTouchEnd = () => {
+      // Small delay to ensure selection is complete
+      setTimeout(handleTextSelection, 10)
+    }
+
     document.addEventListener('mouseup', handleMouseUp)
-    return () => document.removeEventListener('mouseup', handleMouseUp)
+    document.addEventListener('touchend', handleTouchEnd)
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp)
+      document.removeEventListener('touchend', handleTouchEnd)
+    }
   }, [])
 
   // Handle toolbar actions
