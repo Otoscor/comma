@@ -144,9 +144,6 @@
 }
 
 .novel-content__highlighted {
-  background-color: rgba(255, 235, 153, 0.3);
-  border-radius: 4px;
-  padding: 4px 8px;
-  margin: -4px -8px;
-  transition: background-color 0.2s;
+  /* Background color removed as per request - only marker dot remains */
+  background-color: transparent;
 }
