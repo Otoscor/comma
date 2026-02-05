@@ -66,7 +66,7 @@
     align-items: center;
     justify-content: space-between;
     height: 48px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .creator-modal__title {
@@ -263,15 +263,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 0;
 }
 
 .creator-modal__result-image {
     width: 100%;
-    max-width: 100%;
-    height: auto;
+    aspect-ratio: 1 / 1;
     border-radius: 8px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 /* ============================================
@@ -283,6 +282,45 @@
     cursor: not-allowed;
 }
 
+
 .creator-modal__generate-button:disabled:hover {
     background: var(--background-primary, #FFF);
+}
+
+/* Result Actions */
+.creator-modal__footer--result {
+    display: flex;
+    gap: 8px;
+}
+
+.creator-modal__action-button {
+    flex: 1;
+    display: flex;
+    height: 48px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 2px;
+    border: 1px solid var(--color-border-light);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-interface);
+    font-size: 16px;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.creator-modal__action-button:hover {
+    background-color: var(--color-bg-secondary);
+}
+
+.creator-modal__action-button:active {
+    background-color: var(--color-bg-tertiary);
+}
+
+.creator-modal__action-button svg {
+    width: 20px;
+    height: 20px;
 }
