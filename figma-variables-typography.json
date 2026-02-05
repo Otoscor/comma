@@ -1,0 +1,213 @@
+{
+  "font": {
+    "family": {
+      "content": {
+        "$type": "fontFamily",
+        "$value": "Nanum Myeongjo"
+      },
+      "interface": {
+        "$type": "fontFamily",
+        "$value": "Pretendard"
+      }
+    },
+    "weight": {
+      "bold": {
+        "$type": "fontWeight",
+        "$value": "700"
+      },
+      "medium": {
+        "$type": "fontWeight",
+        "$value": "500"
+      }
+    }
+  },
+  "typography": {
+    "primitive": {
+      "display": {
+        "lg": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.content}",
+            "fontWeight": "{font.weight.bold}",
+            "fontSize": "24px",
+            "lineHeight": "32px",
+            "letterSpacing": "-0.48px"
+          }
+        },
+        "md": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.content}",
+            "fontWeight": "{font.weight.bold}",
+            "fontSize": "20px",
+            "lineHeight": "28px",
+            "letterSpacing": "-0.40px"
+          }
+        }
+      },
+      "heading": {
+        "lg": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.content}",
+            "fontWeight": "{font.weight.bold}",
+            "fontSize": "18px",
+            "lineHeight": "24px",
+            "letterSpacing": "-0.36px"
+          }
+        },
+        "md": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.content}",
+            "fontWeight": "{font.weight.bold}",
+            "fontSize": "16px",
+            "lineHeight": "22px",
+            "letterSpacing": "-0.32px"
+          }
+        }
+      },
+      "body": {
+        "lg": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.content}",
+            "fontWeight": "{font.weight.bold}",
+            "fontSize": "16px",
+            "lineHeight": "25.6px",
+            "letterSpacing": "-0.32px"
+          },
+          "$description": "웹소설 본문용 (line-height 1.6)"
+        },
+        "md": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.interface}",
+            "fontWeight": "{font.weight.medium}",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "letterSpacing": "-0.28px"
+          }
+        }
+      },
+      "label": {
+        "lg": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.interface}",
+            "fontWeight": "{font.weight.medium}",
+            "fontSize": "14px",
+            "lineHeight": "24px",
+            "letterSpacing": "-0.28px"
+          }
+        },
+        "md": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.interface}",
+            "fontWeight": "{font.weight.medium}",
+            "fontSize": "13px",
+            "lineHeight": "24px",
+            "letterSpacing": "-0.26px"
+          }
+        },
+        "sm": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.interface}",
+            "fontWeight": "{font.weight.medium}",
+            "fontSize": "12px",
+            "lineHeight": "18px",
+            "letterSpacing": "-0.24px"
+          }
+        }
+      },
+      "caption": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.interface}",
+          "fontWeight": "{font.weight.medium}",
+          "fontSize": "12px",
+          "lineHeight": "18px",
+          "letterSpacing": "-0.24px"
+        }
+      }
+    },
+    "novel": {
+      "body": {
+        "$type": "typography",
+        "$value": "{typography.primitive.body.lg}",
+        "$description": "웹소설 본문 (Container_ContentArea)"
+      },
+      "title": {
+        "$type": "typography",
+        "$value": "{typography.primitive.heading.lg}",
+        "$description": "작품 제목 (Text_NovelTitle 등)"
+      },
+      "quote": {
+        "$type": "typography",
+        "$value": "{typography.primitive.body.lg}",
+        "$description": "스크랩된 텍스트 프리뷰"
+      }
+    },
+    "modal": {
+      "heading": {
+        "$type": "typography",
+        "$value": "{typography.primitive.heading.lg}",
+        "$description": "모달 제목 (Text_ModalTitle)"
+      },
+      "body": {
+        "$type": "typography",
+        "$value": "{typography.primitive.body.md}",
+        "$description": "모달 본문 설명"
+      }
+    },
+    "ui": {
+      "nav": {
+        "title": {
+          "$type": "typography",
+          "$value": "{typography.primitive.body.md}",
+          "$description": "네비게이션 제목 (AppBar)"
+        }
+      },
+      "button": {
+        "primary": {
+          "$type": "typography",
+          "$value": "{typography.primitive.label.md}",
+          "$description": "주요 버튼 텍스트"
+        },
+        "secondary": {
+          "$type": "typography",
+          "$value": "{typography.primitive.label.md}",
+          "$description": "보조 버튼 텍스트"
+        }
+      },
+      "tab": {
+        "label": {
+          "$type": "typography",
+          "$value": "{typography.primitive.label.md}",
+          "$description": "탭 레이블 (BottomTab, Navigation.TabBar)"
+        }
+      },
+      "checkbox": {
+        "label": {
+          "$type": "typography",
+          "$value": "{typography.primitive.label.lg}",
+          "$description": "체크박스 레이블"
+        }
+      },
+      "progress": {
+        "indicator": {
+          "$type": "typography",
+          "$value": "{typography.primitive.label.sm}",
+          "$description": "진행률 표시 (1/100)"
+        }
+      },
+      "caption": {
+        "$type": "typography",
+        "$value": "{typography.primitive.caption}",
+        "$description": "보조 설명, 힌트 텍스트"
+      }
+    }
+  }
+}

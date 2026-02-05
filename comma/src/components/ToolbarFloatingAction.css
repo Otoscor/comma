@@ -1,0 +1,104 @@
+.toolbar-floating-action {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 60px;
+  padding: 0 8px;
+  background-color: var(--color-surface-elevated);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transform: translateX(-50%);
+}
+
+.toolbar-floating-action__options {
+  display: flex;
+  gap: 8px;
+}
+
+.toolbar-floating-action__option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 8px;
+}
+
+.toolbar-floating-action__option:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.toolbar-floating-action__option:disabled:hover {
+  background-color: transparent;
+}
+
+.toolbar-floating-action__option:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.toolbar-floating-action__option:active {
+  background-color: var(--color-neutral-200);
+}
+
+.toolbar-floating-action__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-primary);
+}
+
+.toolbar-floating-action__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.toolbar-floating-action__label {
+  font-family: var(--font-family-interface);
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: -0.26px;
+}
+
+.toolbar-floating-action__divider {
+  width: 1px;
+  height: 40px;
+  background-color: var(--color-border-subtle);
+  margin: 0 4px;
+}
+
+.toolbar-floating-action__cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 6px;
+}
+
+.toolbar-floating-action__cancel:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.toolbar-floating-action__cancel:active {
+  background-color: var(--color-neutral-200);
+}
+
+.toolbar-floating-action__cancel svg {
+  color: var(--color-text-secondary);
+}

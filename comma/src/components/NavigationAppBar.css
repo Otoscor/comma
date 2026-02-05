@@ -1,0 +1,130 @@
+/* ============================================
+   NavigationAppBar Component
+   ============================================ */
+
+.navigation-app-bar {
+  width: 100%;
+  background-color: var(--color-bg-primary);
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.navigation-app-bar--hidden {
+  transform: translateY(-100%);
+}
+
+.navigation-app-bar__main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  padding: 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* Left Section */
+.navigation-app-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  /* Allow text truncation */
+}
+
+.navigation-app-bar__back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.navigation-app-bar__back-button:hover {
+  opacity: 0.7;
+}
+
+.navigation-app-bar__back-button:active {
+  opacity: 0.5;
+}
+
+.navigation-app-bar__back-icon {
+  font-size: 24px;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.navigation-app-bar__title {
+  font-family: var(--font-family-interface);
+  font-weight: var(--font-weight-medium);
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.28px;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* Right Section */
+.navigation-app-bar__right {
+  display: none;
+  /* Hidden as per user request */
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.navigation-app-bar__log-view {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  transition: opacity 0.2s;
+}
+
+.navigation-app-bar__log-view:hover {
+  opacity: 0.7;
+}
+
+.navigation-app-bar__log-view:active {
+  opacity: 0.5;
+}
+
+.navigation-app-bar__checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  line-height: 1;
+}
+
+.navigation-app-bar__checkbox.checked {
+  color: var(--color-text-primary);
+}
+
+.navigation-app-bar__log-label {
+  font-family: var(--font-family-interface);
+  font-weight: var(--font-weight-medium);
+  font-size: 13px;
+  line-height: 24px;
+  letter-spacing: -0.26px;
+  color: var(--color-text-secondary);
+}
