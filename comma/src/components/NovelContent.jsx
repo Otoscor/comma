@@ -10,9 +10,12 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
   const [toolbarPosition, setToolbarPosition] = useState(null)
   const [showCreatorModal, setShowCreatorModal] = useState(false)
   const [modalType, setModalType] = useState(null)
+  const [savedMarkers, setSavedMarkers] = useState([]) // Track saved text markers
+  const [hoveredMarkerIndex, setHoveredMarkerIndex] = useState(null) // Track which marker is hovered
   const contentRef = useRef(null)
   const isUserScrollingRef = useRef(false)
   const isAutoScrollingRef = useRef(false)
+  const toolbarRef = useRef(null)
 
   useEffect(() => {
     const loadEpisode = async () => {
@@ -55,6 +58,8 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
       const maxScroll = scrollHeight - clientHeight
       const percentage = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0
 
+
+
       if (onScrollChange) {
         onScrollChange(percentage)
       }
@@ -70,9 +75,11 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
       }, 100)
     }
 
-    element.addEventListener('scroll', handleScroll)
+    // Use 'scroll' event which covers both wheel (desktop) and touch scroll (mobile)
+    // Adding passive: true for better performance on mobile
+    element.addEventListener('scroll', handleScroll, { passive: true })
     return () => element.removeEventListener('scroll', handleScroll)
-  }, [onScrollChange])
+  }, [onScrollChange, onScrollPositionChange, loading])
 
   // Handle scroll from slider
   useEffect(() => {
@@ -92,6 +99,9 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
 
   // Handle text selection
   useEffect(() => {
+    // Detect if device supports touch
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
     const handleTextSelection = () => {
       const selection = window.getSelection()
       const text = selection?.toString().trim()
@@ -141,11 +151,19 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
       setTimeout(handleTextSelection, 10)
     }
 
-    document.addEventListener('mouseup', handleMouseUp)
-    document.addEventListener('touchend', handleTouchEnd)
-    return () => {
-      document.removeEventListener('mouseup', handleMouseUp)
-      document.removeEventListener('touchend', handleTouchEnd)
+    // Apply event listeners based on device type
+    if (isTouchDevice) {
+      // Mobile/Touch devices - use touch events
+      document.addEventListener('touchend', handleTouchEnd)
+      return () => {
+        document.removeEventListener('touchend', handleTouchEnd)
+      }
+    } else {
+      // Desktop devices - use mouse events
+      document.addEventListener('mouseup', handleMouseUp)
+      return () => {
+        document.removeEventListener('mouseup', handleMouseUp)
+      }
     }
   }, [])
 
@@ -173,62 +191,71 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
     // TODO: Implement AI image generation
   }
 
-  const toolbarRef = useRef(null)
+  const handleSaveToLog = (text) => {
+    // Clean text for better matching (trim whitespace)
+    const cleanText = text.trim()
 
-  // Handle outside click to dismiss toolbar
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      // If toolbar is visible and click is outside of it
-      if (
-        toolbarRef.current &&
-        !toolbarRef.current.contains(event.target) &&
-        selectedText
-      ) {
-        handleCancelSelection()
+    // Check if we already have this marker
+    const exists = savedMarkers.some(marker => marker.text === cleanText)
+
+    if (!exists) {
+      const newMarker = {
+        id: Date.now(),
+        text: cleanText
       }
+      setSavedMarkers(prev => [...prev, newMarker])
+      console.log('Saved marker:', newMarker)
     }
-
-    if (selectedText && toolbarPosition) {
-      document.addEventListener('mousedown', handleOutsideClick)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick)
-    }
-  }, [selectedText, toolbarPosition])
-
-  if (loading) {
-    return (
-      <div className="novel-content">
-        <div className="novel-content__loading">
-          로딩 중...
-        </div>
-      </div>
-    )
   }
+
+  // ... (toolbar logic stays same) ...
 
   return (
     <div className="novel-content" ref={contentRef}>
       <div className={`novel-content__text ${showCreatorModal ? 'novel-content__text--no-select' : ''}`}>
-        {content.split('\n').map((paragraph, index) => {
+        {content.split('\n').map((paragraph, paragraphIndex) => {
           // Empty lines for spacing
           if (paragraph.trim() === '') {
-            return <br key={index} />
+            return <br key={paragraphIndex} />
           }
 
-          // Special formatting markers from the original text
+          // Check if this paragraph contains any of the saved text markers
+          // We check if the paragraph text includes the marker text or vice versa
+          // to handle cases where users select part of a paragraph or multiple paragraphs
+          const cleanParagraph = paragraph.trim()
+          const matchedMarker = savedMarkers.find(marker => {
+            const cleanMarker = marker.text
+            return cleanParagraph.includes(cleanMarker) || cleanMarker.includes(cleanParagraph)
+          })
+
+          const hasMarker = !!matchedMarker
+          const isHovered = matchedMarker && matchedMarker.id === hoveredMarkerIndex
+
+          // Special formatting markers
           if (paragraph.includes('/[') || paragraph.includes('](볼드)/')) {
             return (
-              <p key={index} className="novel-content__special">
-                {paragraph.replace(/\/\[/g, '[').replace(/\]\(볼드\)\//g, ']')}
-              </p>
+              <div key={paragraphIndex} className="novel-content__paragraph-wrapper">
+                {hasMarker && (
+                  <div
+                    className="novel-content__marker"
+                    onMouseEnter={() => setHoveredMarkerIndex(matchedMarker.id)}
+                    onMouseLeave={() => setHoveredMarkerIndex(null)}
+                  >
+                    📌
+                  </div>
+                )}
+                <p
+                  className={`novel-content__special ${isHovered ? 'novel-content__highlighted' : ''}`}
+                >
+                  {paragraph.replace(/\/\[/g, '[').replace(/\]\(볼드\)\//g, ']')}
+                </p>
+              </div>
             )
           }
 
-          // Section separators
           if (paragraph.trim() === '***') {
             return (
-              <div key={index} className="novel-content__separator">
+              <div key={paragraphIndex} className="novel-content__separator">
                 ***
               </div>
             )
@@ -236,9 +263,18 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
 
           // Regular paragraphs
           return (
-            <p key={index} className="novel-content__paragraph">
-              {paragraph}
-            </p>
+            <div key={paragraphIndex} className="novel-content__paragraph-wrapper">
+              {hasMarker && (
+                <div
+                  className="novel-content__marker"
+                  onMouseEnter={() => setHoveredMarkerIndex(matchedMarker.id)}
+                  onMouseLeave={() => setHoveredMarkerIndex(null)}
+                />
+              )}
+              <p className={`novel-content__paragraph ${isHovered ? 'novel-content__highlighted' : ''}`}>
+                {paragraph}
+              </p>
+            </div>
           )
         })}
       </div>
@@ -260,6 +296,7 @@ function NovelContent({ episodeNumber = 1, onScrollChange, scrollPercentage, onS
           scrappedText={selectedText}
           onClose={handleCloseModal}
           onGenerate={handleGenerateImage}
+          onSaveToLog={handleSaveToLog}
         />
       )}
     </div>

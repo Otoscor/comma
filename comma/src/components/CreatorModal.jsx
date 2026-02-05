@@ -41,7 +41,7 @@ const RetrySimpleIcon = () => (
     </svg>
 )
 
-function CreatorModal({ type, scrappedText, onClose, onGenerate }) {
+function CreatorModal({ type, scrappedText, onClose, onGenerate, onSaveToLog }) {
     const [isLoading, setIsLoading] = useState(false)
     const [resultImage, setResultImage] = useState(null)
 
@@ -81,6 +81,13 @@ function CreatorModal({ type, scrappedText, onClose, onGenerate }) {
                 onGenerate(scrappedText)
             }
         }, 2000) // 2 second loading simulation
+    }
+
+    const handleSaveToLog = () => {
+        if (onSaveToLog) {
+            onSaveToLog(scrappedText)
+        }
+        onClose()
     }
 
     const getModalTitle = () => {
@@ -167,7 +174,7 @@ function CreatorModal({ type, scrappedText, onClose, onGenerate }) {
                     <div className="creator-modal__footer creator-modal__footer--result">
                         <button
                             className="creator-modal__action-button"
-                            onClick={() => console.log('Save to log')}
+                            onClick={handleSaveToLog}
                         >
                             <LogSaveIcon />
                             <span>로그에 남기기</span>
